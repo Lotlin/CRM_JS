@@ -5,11 +5,9 @@ const goodAmount = + prompt('Введите количество товара', 
 const goodCategory = prompt('Введите категорию товара', 'notebook');
 const goodPrice = + prompt('Введите цену товара', 25);
 
-console.log(typeof(goodName));
-console.log(typeof(goodAmount));
-console.log(typeof(goodCategory));
-console.log(typeof(goodPrice));
-
-goodTotalPrice = goodAmount * goodPrice;
-
-console.log(`На складе ${goodAmount} единицы товара ${goodName} на сумму ${goodTotalPrice} деревянных`);
+if (Number.isFinite(goodAmount) && Number.isFinite(goodPrice)) {
+  goodTotalPrice = goodAmount * goodPrice;
+  console.log(`На складе ${goodAmount} единицы товара ${goodName} на сумму ${goodTotalPrice} деревянных`);
+} else {
+  console.log("Вы ввели некорректные данные");
+}
