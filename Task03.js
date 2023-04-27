@@ -1,15 +1,18 @@
 'use strict';
 
-const reverseStr = string => {
-  const strLength = string.length;
-  let reversedString = '';
+const names= ['Noah', 'Liam', 'Mason', 'Jacob', 'Robot', 'William', 'Ethan', 'Michael', 'Alexander'];
 
-  for (let i = strLength - 1; i >= 0; i--) {
-    reversedString += string[i];
+const addPrefix = (arr, prefix) => {
+  const newPrefix = prefix + ' ';
+  const newArr = [];
+  let newElem = '';
+
+  for(const elem of arr) {
+    newElem = newPrefix + elem;
+    newArr.push(newElem);
   }
 
-  return reversedString;
+  return newArr;
 }
 
-const userString = prompt('Введите строку', 'Привет мир');
-console.log(reverseStr(userString));
+console.log(`Новый массив: ${addPrefix(names, 'Mr')}.`);

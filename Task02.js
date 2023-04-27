@@ -1,20 +1,18 @@
 'use strict';
 
-const isPrime = num => {
-  const sqrt = Math.sqrt(num); // у каждого непростого числа есть делитель, не превышающий квадратного корня из числа
-  for (let i = 2; i <= sqrt; i++) {  
-    if (!(num % i)) {
-      return false;
-    }
+const allCashbox = [4500, 3210, 650, 1250, 7830, 990, 13900, 370];
+
+const  getAverageValue = arr => {
+  const numOfCheks = arr.length;
+  let totalCash = 0;
+
+  for (const elem of arr) {
+    totalCash += elem;
   }
 
-  return true;
+  const averageValue = Math.floor(totalCash / numOfCheks);
+
+  return averageValue;
 }
 
-const userNum =  + prompt('Введите число для проверки на простоту числа', 151);
-
-if (!Number.isFinite(userNum)) {
-  console.log("Вы ввели некорректные данные.");
-} else {
-  console.log(isPrime(userNum));
-}
+console.log(`Средний чек за день: ${getAverageValue(allCashbox)} руб.`);
