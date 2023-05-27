@@ -2,7 +2,6 @@
 
 const cart = {
   items: [],
-  totalPrice: 0,
   count: 0,
 
   add(item, itemPrice, itemNum = 1) {
@@ -16,9 +15,8 @@ const cart = {
   },
 
   calculateItemPrice() {
-    const totalPrice = cart.items.reduce((acc, item) => {
-        return acc + (item.itemNum * item.itemPrice);
-    }, 0);
+    const totalPrice = cart.items.reduce((acc, item) =>
+      acc + (item.itemNum * item.itemPrice), 0);
 
     return totalPrice;
   },
@@ -29,13 +27,13 @@ const cart = {
 
   clear() {
     this.items = [];
-    this.totalPrice = 0;
     this.count = 0;
   },
 
   print() {
     console.log(JSON.stringify(this.items));
-    console.log(`Итоговая стоимость товаров в корзине: ${this.totalPrice} руб.`);
+    console.log(`Итоговая стоимость товаров в корзине: 
+      ${this.totalPrice} руб.`);
   },
 };
 
