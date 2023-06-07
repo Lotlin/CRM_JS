@@ -1,12 +1,13 @@
 'use strict';
+
 (() => {
   const DATA_RUS = {
     figures: ['камень', 'ножницы', 'бумага'],
 
     validCharacters: [
-      'камень', 'камен', 'каме', 'кам', 'ка', 'к', 'ножницы',
-      'ножниц', 'ножни', 'ножн', 'нож', 'но', 'н', 'бумага',
-      'бумаг', 'бума', 'бум', 'бу', 'б',
+      'камень', 'камен', 'каме', 'кам', 'ка', 'к',
+      'ножницы', 'ножниц', 'ножни', 'ножн', 'нож', 'но', 'н',
+      'бумага', 'бумаг', 'бума', 'бум', 'бу', 'б',
     ],
 
     winningCombinations: {
@@ -14,20 +15,49 @@
       computer: ['кб', 'нк', 'бн'],
       draw: ['кк', 'нн', 'бб'],
     },
+
+    messages: {
+      win: 'вы выиграли',
+      los: 'вы проиграли',
+      draw: 'ничья',
+      welcome: 'камень, ножницы, бумага?',
+      warning: `вы точно хотите закончить? 
+      \nНет - введите 0, да - любой символ`,
+    },
+
+    participants: {
+      computer: 'компьютер',
+      player: 'игрок',
+    },
   };
 
   const DATA_ENG = {
     figures: ['rock', 'scissors', 'paper'],
 
     validCharacters: [
-      'rock', 'roc', 'ro', 'r', 'scissors', 'scissor', 'scisso',
-      'sciss', 'scis', 'sci', 'sc', 's', 'paper', 'pape', 'pap', 'pa', 'p',
+      'rock', 'roc', 'ro', 'r',
+      'scissors', 'scissor', 'scisso', 'sciss', 'scis', 'sci', 'sc', 's',
+      'paper', 'pape', 'pap', 'pa', 'p',
     ],
 
     winningCombinations: {
       player: ['rs', 'sp', 'pr'],
       computer: ['rp', 'sr', 'ps'],
       draw: ['rr', 'ss', 'pp'],
+    },
+
+    messages: {
+      win: 'you won',
+      los: 'you lost',
+      draw: 'draw',
+      welcome: 'rock, scissors, paper?',
+      warning: `are you really want to finish?
+      \nNo - enter 0, yes - any symbol`,
+    },
+
+    participants: {
+      computer: 'computer',
+      player: 'player',
     },
   };
 
@@ -57,13 +87,11 @@
 
   const getFullChoiseName = (userChoice, data) => {
     let fullName = '';
-
     for (let i = 0; i < data.figures.length; i++) {
       if (data.figures[i][0] === userChoice[0]) {
         fullName = data.figures[i];
       }
     }
-
     return fullName;
   };
 
@@ -81,44 +109,46 @@
       let message = '';
 
       if (data.winningCombinations.player.includes(combination)) {
-        message = 'Вы выиграли';
+        message = data.messages.win;
         result.player += 1;
       }
 
       if (data.winningCombinations.computer.includes(combination)) {
-        message = 'Вы проиграли';
+        message = data.messages.los;
         result.computer += 1;
       }
 
       if (data.winningCombinations.draw.includes(combination)) {
-        message = 'Ничья';
+        message = data.messages.draw;
       }
 
-      const resultMesage = `игрок - ${getFullChoiseName(userChoice, data)} 
-      \n компьютер - ${computerChoice} \n ${message}`;
+      const resultMesage = `${data.participants.player}:
+      \n${getFullChoiseName(userChoice, data)} 
+      \n${data.participants.computer}: 
+      \n${computerChoice} 
+      \n${message}`;
 
       return resultMesage;
     };
 
     return function start() {
-      const userChoice = prompt('камень, ножницы, бумага?');
+      const userChoice = prompt(data.messages.welcome);
       const computerChoice = getFigure(data);
 
       if (userChoice === null) {
-        const exit = prompt(`Вы уверены, что хотите выйти?
-        \nЕсли нет - введите 0, если да - любой символ`);
+        const exit = prompt(data.messages.warning);
         if (exit === '0') {
           start();
         } else {
-          return alert(`Результат: 
-          \nигрок: ${result.player} \nкомпьютер: ${result.computer}`);
+          return alert(`${data.participants.player}: ${result.player} 
+          \n${data.participants.computer}: ${result.computer}`);
         }
       }
 
       if (data.validCharacters.includes(userChoice)) {
         alert(getWinner(userChoice, computerChoice, data));
-        alert(`Результат: 
-        \nигрок: ${result.player} \nкомпьютер: ${result.computer}`);
+        alert(`${data.participants.player}: ${result.player} 
+        \n${data.participants.computer}: ${result.computer}`);
         start();
       } else {
         return start();
